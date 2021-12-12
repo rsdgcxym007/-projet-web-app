@@ -48,12 +48,8 @@
     </v-main>
     <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
-        <v-list-item @click.native="right = !right">
-          <v-list-item-action>
             <v-icon light> mdi-repeat </v-icon>
-          </v-list-item-action>
-          <v-list-item-title>Switch drawer (click me)</v-list-item-title>
-        </v-list-item>
+          <v-btn color="error" class="mb-6" @click="logout">ออกจากระบบ</v-btn>
       </v-list>
     </v-navigation-drawer>
     <v-footer :absolute="!fixed" app>
@@ -72,19 +68,37 @@ export default {
       items: [
         {
           icon: 'mdi-apps',
-          title: 'Welcome',
+          title: 'หน้าแรก',
           to: '/',
         },
         {
           icon: 'mdi-chart-bubble',
-          title: 'Inspire',
+          title: 'แผนที่',
           to: '/inspire',
         },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'หน้าขอความช่วย',
+          to: '/manage/request',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'อัพเดทอาการเบื้องต้น',
+          to: '/manage/upcovid',
+        },
+        {
+          icon: 'mdi-chart-bubble',
+          title: 'ทำเรื่่องหายป่วย',
+          to: '/manage/update',
+        },
       ],
+      async logout() {
+        await this.$auth.logout()
+        this.$router.push('/manage/index')
+      },
       miniVariant: false,
       right: true,
       rightDrawer: false,
-      title: 'Vuetify.js',
     }
   },
 }
