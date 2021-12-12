@@ -37,3 +37,7 @@
   .swal2-popup {
     font-family: Prompt !important;
   }
+
+  .pointer {
+    cursor: pointer;
+  }
