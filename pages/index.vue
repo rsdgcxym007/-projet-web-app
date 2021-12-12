@@ -10,7 +10,7 @@
                   <v-tabs v-model="tabs" fixed-tabs color="light-blue darken-4">
                     <v-tabs-slider></v-tabs-slider>
                     <v-tab href="#mobile-tabs-5-1">
-                      <h3>ขอความช่วยเหลือ</h3>
+                      <h3>เข้าสู่ระบบ</h3>
                     </v-tab>
 
                     <v-tab href="#mobile-tabs-5-2"> <h3>ลงทะเบียน</h3> </v-tab>
@@ -129,12 +129,12 @@ export default {
       group: null,
       groups: [],
       tabs: null,
-      password: '12345678',
-      firstname: 'aaaa',
-      lastname: 'aaaa',
-      address: 'aaaaa',
-      tel: '0879995544',
-      email: 'user1@gmail.com',
+      password: '123456789',
+      firstname: '',
+      lastname: '',
+      address: '',
+      tel: '',
+      email: 'testuser1@dpu.ac.th',
     }
   },
   methods: {

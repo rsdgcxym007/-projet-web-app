@@ -2,6 +2,8 @@
   <div>
     <v-container>
       <v-btn color="info" class="mb-6" @click="request">ขอความช่วยเหลือ</v-btn>
+      <v-btn color="info" class="mb-6" @click="update">อัพเดทอาการปัจจุบัน</v-btn>
+      <v-btn color="info" class="mb-6" @click="upcovid">ทำเรื่องหายป่วย</v-btn>
       <v-btn color="error" class="mb-6" @click="logout">ออกจากระบบ</v-btn>
       <v-card>
         <v-card-title>
@@ -42,6 +44,12 @@ export default {
   methods: {
     request() {
       this.$router.push({ path: '/manage/request' })
+    },
+    upcovid() {
+      this.$router.push({ path: '/manage/upcovid' })
+    },
+    update() {
+      this.$router.push({ path : '/manage/update'})
     },
     async logout() {
       await this.$auth.logout()
