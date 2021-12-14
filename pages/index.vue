@@ -72,18 +72,24 @@
                             label="ชื่อ"
                             prepend-icon="mdi-account"
                             type="text"
+                            :rules="firstnameRules"
+                            required
                           ></v-text-field>
                           <v-text-field
                             v-model="lastname"
                             label="นามสกุล"
                             prepend-icon="mdi-account"
                             type="text"
+                            :rules="lastnameRules"
+                            required
                           ></v-text-field>
                           <v-text-field
                             v-model="address"
                             label="ที่อยู่"
                             prepend-icon="mdi-clipboard-account"
                             type="text"
+                            :rules="addressRules"
+                            required
                           ></v-text-field>
 
                           <v-text-field
@@ -91,16 +97,22 @@
                             label="เบอร์โทรศัพท์"
                             prepend-icon="mdi-phone"
                             type="text"
+                            :rules="telRules"
+                            required
                           ></v-text-field>
                           <v-text-field
                             v-model="email"
                             label="อีเมล"
                             prepend-icon="mdi-account"
+                            :rules="emailRules"
+                            required
                           ></v-text-field>
                           <v-text-field
                             v-model="password"
                             label="รหัสผ่าน"
                             prepend-icon="mdi-lock"
+                            :rules="passwordRules"
+                            required
                           ></v-text-field>
                           <v-col cols="12" sm="6" md="12">
                             <v-autocomplete
@@ -116,7 +128,7 @@
                       <v-card-actions>
                         <v-spacer></v-spacer>
                         <v-btn @click="reset2">ล้างข้อมูล</v-btn>
-                        <v-btn color="primary" @click="register"
+                        <v-btn color="primary" @click="validate2"
                           >ลงทะเบียน</v-btn
                         >
                       </v-card-actions>
@@ -150,6 +162,15 @@ export default {
       tel: '',
       email: 'testuser1@dpu.ac.th',
       show1: false,
+      emailRules: [
+        (v) => !!v || 'E-mail is required',
+        (v) => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
+      passwordRules: [(v) => !!v || 'Password is required'],
+      firstnameRules: [(v) => !!v || 'Name is required'],
+      lastnameRules: [(v) => !!v || 'Lastname is required'],
+      addressRules: [(v) => !!v || 'Position is required'],
+      telRules: [(v) => !!v || 'Tel is required'],
     }
   },
   methods: {
@@ -177,7 +198,7 @@ export default {
     },
     validate2() {
       if (this.$refs.form2.validate() === true) {
-        this.Register()
+        this.register()
       } else {
         this.$swal({
           icon: 'warning',

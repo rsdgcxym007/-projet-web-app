@@ -18,7 +18,7 @@
         <v-data-table
           :headers="headers"
           :items="details"
-          :items-per-page="50"
+          :items-per-page="5"
           :search="search"
           class="elevation-1"
         >
@@ -27,6 +27,9 @@
               {{ item.status_name }}
             </v-chip>
           </template>
+          <!-- <template v-slot:[`item.help`]="{}">
+            <v-btn>ช่วยเหลือ</v-btn>
+          </template> -->
         </v-data-table>
       </v-card>
     </v-container>

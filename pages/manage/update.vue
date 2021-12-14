@@ -11,6 +11,8 @@
             v-model="body.remark"
             counter
             label="อัพเดทอาการปัจจุบัน"
+            :rules="remarkRules"
+            required
           ></v-textarea>
           <v-col cols="12">
             <v-btn color="success" @click="request()">Request</v-btn>
@@ -23,11 +25,10 @@
 </template>
 <script>
 export default {
-  data: () => ({
-    middleware: 'auth',
-  }),
+  middleware: 'auth',
   data() {
     return {
+      remarkRules: [(v) => !!v || 'Password is required'],
       body: {
         remark: '',
         user_id: this.$auth.user.id,
@@ -37,19 +38,22 @@ export default {
   },
   methods: {
     async request() {
-      const { result, message } = await this.$axios.$post(
-        '/api/manage/request',
-        this.body
-      )
+      this.$refs.form.validate()
+      if (this.$refs.form.validate() === true) {
+        const { result, message } = await this.$axios.$post(
+          '/api/manage/request',
+          this.body
+        )
 
-      if (!result) {
-        console.log('error : ', message)
-      } else {
-        this.$swal({
-          type: 'success',
-          title: message,
-        })
-        this.$router.push({ path: '/manage' })
+        if (!result) {
+          console.log('error : ', message)
+        } else {
+          this.$swal({
+            type: 'success',
+            title: message,
+          })
+          this.$router.push({ path: '/manage' })
+        }
       }
     },
     black() {

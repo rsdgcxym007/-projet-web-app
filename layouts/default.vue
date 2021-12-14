@@ -26,7 +26,11 @@
     </v-navigation-drawer>
     <v-app-bar :clipped-left="clipped" fixed app>
       <v-app-bar-nav-icon @click.stop="drawer = !drawer" />
-      <v-btn class="d-none d-lg-block" icon @click.stop="miniVariant = !miniVariant">
+      <v-btn
+        class="d-none d-lg-block"
+        icon
+        @click.stop="miniVariant = !miniVariant"
+      >
         <v-icon>mdi-{{ `chevron-${miniVariant ? 'right' : 'left'}` }}</v-icon>
       </v-btn>
       <v-btn class="d-none d-lg-block" icon @click.stop="clipped = !clipped">
@@ -44,7 +48,7 @@
             <v-avatar size="36" color="indigo">
               <v-icon dark> mdi-account-circle </v-icon>
             </v-avatar>
-            name surename
+            {{ `${$auth.user.firstname} ${$auth.user.lastname}` }}
             <v-icon color="#1976d2">mdi-chevron-down</v-icon>
           </a>
         </template>
@@ -79,8 +83,8 @@
     </v-main>
     <!-- <v-navigation-drawer v-model="rightDrawer" :right="right" temporary fixed>
       <v-list>
-            <v-icon light> mdi-repeat </v-icon>
-          <v-btn color="error" class="mb-6" @click="logout">ออกจากระบบ</v-btn>
+        <v-icon light> mdi-repeat </v-icon>
+        <v-btn color="error" class="mb-6" @click="logout">ออกจากระบบ</v-btn>
       </v-list>
     </v-navigation-drawer> -->
     <v-footer :absolute="!fixed" app>
@@ -115,12 +119,12 @@ export default {
         {
           icon: 'mdi-note-edit',
           title: 'อัพเดทอาการเบื้องต้น',
-          to: '/manage/upcovid',
+          to: '/manage/update',
         },
         {
           icon: 'mdi-clipboard-check',
           title: 'ทำเรื่่องหายป่วย',
-          to: '/manage/update',
+          to: '/manage/upcovid',
         },
       ],
       miniVariant: false,
