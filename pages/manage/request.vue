@@ -67,7 +67,7 @@ export default {
             type: 'success',
             title: message,
           })
-          this.$router.push({ path: '/manage' })
+          this.$router.push({ path: '/manage/upcovid' })
         }
       }
     },

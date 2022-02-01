@@ -17,6 +17,7 @@
     "nuxt-gmaps": "^1.2.10",
     "nuxt-sweetalert2": "^1.0.0",
     "vue-longdo-map": "^0.3.2",
+    "vue2-google-maps": "^0.10.7",
     "vuetify": "^2.5.5"
   },
   "devDependencies": {

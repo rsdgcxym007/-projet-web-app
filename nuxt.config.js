@@ -1,5 +1,4 @@
 import colors from 'vuetify/es5/util/colors'
-
 export default {
   // Global page headers: https://go.nuxtjs.dev/config-head
   head: {
@@ -26,6 +25,9 @@ export default {
       rel: 'icon',
       type: 'image/x-icon',
       href: '/favicon.ico'
+    }],
+    script: [{
+      src: 'https://maps.googleapis.com/maps/api/js?key=AIzaSyCOeFXWFa4nLSuKKo5-pBNCrB-JkP6MrWk&libraries=places'
     }]
   },
 
@@ -33,7 +35,11 @@ export default {
   css: ['@assets/css/main.css'],
 
   // Plugins to run before rendering page: https://go.nuxtjs.dev/config-plugins
-  plugins: [],
+  plugins: [{
+    src: "~/plugins/google-maps",
+    ssr: true
+  }],
+
 
   // Auto import components: https://go.nuxtjs.dev/config-components
   components: true,
@@ -52,9 +58,9 @@ export default {
     '@nuxtjs/pwa',
     'nuxt-sweetalert2',
     '@nuxtjs/auth-next',
-    ['nuxt-gmaps', {
-      key: 'AIzaSyCOeFXWFa4nLSuKKo5-pBNCrB-JkP6MrWk',
-    }]
+    // ['nuxt-gmaps', {
+    //   key: 'AIzaSyCOeFXWFa4nLSuKKo5-pBNCrB-JkP6MrWk',
+    // }]
   ],
   // Axios module configuration: https://go.nuxtjs.dev/config-axios
   axios: {
@@ -128,7 +134,9 @@ export default {
   },
 
   // Build Configuration: https://go.nuxtjs.dev/config-build
-  build: {},
+  build: {
+    transpile: [/^vue2-google-maps($|\/)/]
+  },
   server: {
     host: "0.0.0.0"
   }

@@ -39,7 +39,7 @@
       <!-- <v-btn icon @click.stop="fixed = !fixed">
         <v-icon>mdi-minus</v-icon>
       </v-btn> -->
-      <v-toolbar-title v-text="title" />
+      <!-- <v-toolbar-title v-text="title" /> -->
       <v-spacer />
 
       <v-menu offset-y :nudge-width="30">
@@ -109,7 +109,7 @@ export default {
         {
           icon: 'mdi-map-marker',
           title: 'แผนที่',
-          to: '/inspire',
+          to: '/manage/map',
         },
         {
           icon: 'mdi-handshake',

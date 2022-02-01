@@ -1,28 +1,39 @@
 <template>
   <div>
-    <GMap
-      ref="gMap"
-      language="en"
-      :cluster="{ options: { styles: clusterStyle } }"
-      :center="{ lat: locations[0].lat, lng: locations[0].lng }"
-      :options="{ fullscreenControl: false }"
-      :zoom="6"
-    >
-      <GMapMarker
-        v-for="location in locations"
-        :key="location.id"
-        :position="{ lat: location.lat, lng: location.lng }"
-        :options="{
-          icon: location === currentLocation ? pins.selected : pins.notSelected,
-        }"
-        @click="currentLocation = location"
+    <pre>lat: {{ lat }} lng: {{ lng }}</pre>
+    <h1>Autocomplete Example (#164)</h1>
+    <label>
+      AutoComplete
+
+      <gmap-autocomplete
+        placeholder="This is a placeholder text"
+        @place_changed="setPlace"
       >
-        <GMapInfoWindow :options="{ maxWidth: 200 }">
-          <code> lat: {{ location.lat }}, lng: {{ location.lng }} </code>
-        </GMapInfoWindow>
-      </GMapMarker>
-      <!-- <GMapCircle :options="circleOptions" /> -->
-    </GMap>
+      </gmap-autocomplete>
+      <button @click="usePlace">Add</button>
+    </label>
+    <br />
+
+    <Gmap-Map
+      style="width: 600px; height: 300px"
+      :zoom="14"
+      :center="{ lat: currentLocation.lat, lng: currentLocation.lng }"
+      :options="{ disableDefaultUI: true }"
+    >
+      <Gmap-Marker
+        v-for="(marker, index) in markers"
+        :key="index"
+        :position="marker.position"
+      ></Gmap-Marker>
+      <Gmap-Marker
+        v-if="this.place"
+        label="&#x2605;"
+        :position="{
+          lat: this.place.geometry.location.lat(),
+          lng: this.place.geometry.location.lng(),
+        }"
+      ></Gmap-Marker>
+    </Gmap-Map>
   </div>
 </template>
 
@@ -30,35 +41,45 @@
 export default {
   data() {
     return {
-      currentLocation: {},
-      locations: [
-        {
-          lat: 44.933076,
-          lng: 15.629058,
-        },
-        {
-          lat: 45.815,
-          lng: '15.9819',
-        },
-        {
-          lat: '45.12',
-          lng: '16.21',
-        },
-      ],
-      pins: {
-        selected: '',
-        notSelected: '',
-      },
-
-      clusterStyle: [
-        {
-          url: 'https://developers.google.com/maps/documentation/javascript/examples/markerclusterer/m1.png',
-          width: 56,
-          height: 56,
-          textColor: '#fff',
-        },
-      ],
+      markers: [],
+      place: null,
+      currentLocation: { lat: 0, lng: 0 },
+      lat: 0,
+      lng: 0,
     }
+  },
+  mounted: function () {
+    this.geolocation()
+  },
+  methods: {
+    geolocation: function () {
+      navigator.geolocation.getCurrentPosition((position) => {
+        this.currentLocation = {
+          lat: position.coords.latitude,
+          lng: position.coords.longitude,
+        }
+      })
+    },
+    setDescription(description) {
+      this.description = description
+    },
+    setPlace(place) {
+      this.place = place
+
+      this.lat = this.place.geometry.location.lat()
+      this.lng = this.place.geometry.location.lng()
+    },
+    usePlace(place) {
+      if (this.place) {
+        this.markers.push({
+          position: {
+            lat: this.place.geometry.location.lat(),
+            lng: this.place.geometry.location.lng(),
+          },
+        })
+        this.place = null
+      }
+    },
   },
 }
 </script>

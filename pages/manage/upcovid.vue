@@ -4,15 +4,8 @@
       <v-col cols="12" sm="10" md="6" lg="4">
         <v-row align="center"> </v-row>
         <v-form ref="form" v-model="valid" lazy-validation>
-          <v-text-field
-            v-model="date"
-            label="เข้ารับการตรวจเมื่อวันที่"
-          ></v-text-field>
-
-          <v-text-field
-            label="ระบุชื่อโรงพยาบาล ที่เข้ารับการตรวจ"
-          ></v-text-field>
           <v-file-input
+            type="file"
             accept="image/*"
             label="ผลตรวจเชื้อแบบ RT-PCR"
             v-model="image1"
@@ -37,35 +30,67 @@ export default {
   middleware: 'auth',
   data: () => ({
     valid: true,
-    date: '',
+    date: null,
+    hotpital_name: null,
     image1: null,
     image2: null,
   }),
-
   methods: {
     async upload() {
+      // var fileBuffer = Buffer.from(this.image1)
+      // console.log('fileBuffer : ', fileBuffer)
+
+      console.log(this.hotpital_name)
+
       if (this.image1) {
         let formData = new FormData()
-
+        formData.append('hotpital_name', this.hotpital_name)
+        formData.append('date', this.date)
         formData.append('file', this.image1)
 
-        await this.$axios.$post(`/api/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
-      }
+        await this.$axios
+          .$post(`/api/upload`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then(async () => {
+            if (this.image2) {
+              let formData = new FormData()
+              formData.append('file', this.image2)
 
-      if (this.image2) {
+              await this.$axios.$post(`/api/upload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              })
+            }
+          })
+      } else if (this.image2) {
         let formData = new FormData()
-
+        formData.append('hotpital_name', this.hotpital_name)
+        formData.append('date', this.date)
         formData.append('file', this.image2)
 
-        await this.$axios.$post(`/api/upload`, formData, {
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
-        })
+        await this.$axios
+          .$post(`/api/upload`, formData, {
+            headers: {
+              'Content-Type': 'multipart/form-data',
+            },
+          })
+          .then(async () => {
+            if (this.image1) {
+              let formData = new FormData()
+
+              formData.append('file', this.image1)
+
+              await this.$axios.$post(`/api/upload`, formData, {
+                headers: {
+                  'Content-Type': 'multipart/form-data',
+                },
+              })
+            }
+          })
       }
     },
     validate() {
